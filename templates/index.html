@@ -4,66 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Recommender</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-      crossorigin="anonymous"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='index.css') }}"
     />
   </head>
-  <body>
-    <nav
-      class="navbar"
-      style="
-        width: 100%;
-        background-color: #ff331f;
-        display: flex;
-        justify-content: space-between;
-      "
-    >
-      <a class="navbar-brand">My Book Recommender</a>
+  <body class="bg-gray-100">
+    <nav class="w-full bg-red-600 p-4 flex justify-between items-center">
+      <a class="text-white text-xl font-bold">My Book Recommender</a>
     </nav>
 
-    <div class="container">
-      <form action="/recommend_books" method="post">
-        <input name="user_input" type="text" class="form-control" /><br />
-        <input type="submit" class="btn btn-lg btn-warning" />
+    <div class="container mx-auto px-4 py-8">
+      <form action="/recommend_books" method="post" class="max-w-md mx-auto">
+        <input
+          name="user_input"
+          type="text"
+          class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+        /><br /><br />
+        <input
+          type="submit"
+          class="w-full bg-yellow-500 text-white p-2 rounded-md text-lg hover:bg-yellow-600 transition"
+        />
       </form>
-      <div></div>
+
       {% if data %} 
-      {% for i in data %}
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="book-card">
-          <img src="{{i[2]}}" alt="Coraline" />
-          <p class="text-white">{{i[0]}}</p>
-          <h4 class="text-white">{{i[1]}}</h4>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
+        {% for i in data %}
+        <div class="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center">
+          <img src="{{i[2]}}" alt="Book Cover" class="w-full h-48 object-cover rounded-md" />
+          <p class="text-white mt-2 text-center">{{i[0]}}</p>
+          <h4 class="text-white font-bold">{{i[1]}}</h4>
         </div>
+        {% endfor %} 
       </div>
-      {% endfor %} 
       {% else %}
-      <h1
-        class="text-center"
-        style="font-size: 40px; margin-top: 20px; color: #0d0106"
-      >
-        Top 20 Books
-      </h1>
-      <div class="row">
-        <!-- Book Cards -->
+      <h1 class="text-center text-3xl font-bold text-gray-900 mt-8">Top 20 Books</h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
         {% for i in range(book_name|length) %}
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="book-card">
-            <img src="{{ image[i] }}" alt="Coraline" />
-            <p class="text-white">{{ book_name[i] }}</p>
-            <h4 class="text-white">{{ author[i] }}</h4>
-            <h4 class="text-white">Rating - {{ "%.2f"|format(rating[i]) }}</h4>
-          </div>
+        <div class="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center">
+          <img src="{{ image[i] }}" alt="Book Cover" class="w-full h-48 object-cover rounded-md" />
+          <p class="text-white mt-2 text-center">{{ book_name[i] }}</p>
+          <h4 class="text-white font-bold">{{ author[i] }}</h4>
+          <h4 class="text-white">Rating - {{ "%.2f"|format(rating[i]) }}</h4>
         </div>
-        {% endfor %} {% endif %}
+        {% endfor %} 
       </div>
+      {% endif %}
     </div>
   </body>
 </html>
