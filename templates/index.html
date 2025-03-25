@@ -29,6 +29,22 @@
     </nav>
 
     <div class="container">
+      <form action="/recommend_books" method="post">
+        <input name="user_input" type="text" class="form-control" /><br />
+        <input type="submit" class="btn btn-lg btn-warning" />
+      </form>
+      <div></div>
+      {% if data %} 
+      {% for i in data %}
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="book-card">
+          <img src="{{i[2]}}" alt="Coraline" />
+          <p class="text-white">{{i[0]}}</p>
+          <h4 class="text-white">{{i[1]}}</h4>
+        </div>
+      </div>
+      {% endfor %} 
+      {% else %}
       <h1
         class="text-center"
         style="font-size: 40px; margin-top: 20px; color: #0d0106"
@@ -46,7 +62,7 @@
             <h4 class="text-white">Rating - {{ "%.2f"|format(rating[i]) }}</h4>
           </div>
         </div>
-        {% endfor %}
+        {% endfor %} {% endif %}
       </div>
     </div>
   </body>
